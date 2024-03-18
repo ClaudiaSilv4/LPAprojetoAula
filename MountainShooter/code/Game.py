@@ -1,10 +1,13 @@
 #!/usr/bin/python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+import sys
+
 import pygame as pygame
 from pygame import Surface, Rect
 from pygame.font import Font
 
-from code.Const import WIN_HEIGHT, WIN_WIDTH
+from code.Const import WIN_HEIGHT, WIN_WIDTH, MENU_OPTION
+from code.Level import Level
 from code.Menu import Menu
 
 
@@ -15,12 +18,18 @@ class Surafce:
 class Game:
     def __init__(self):
         pygame.init()
-        self.window = pygame.display.set_mode(size =(WIN_WIDTH, WIN_HEIGHT))
-
+        self.window = pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
 
     def run(self, ):
 
         while True:
-           menu = Menu(self.window)
-           menu.run()
+            menu = Menu(self.window)
+            menu_return = menu.run()
 
+            if menu_return in [MENU_OPTION[1], MENU_OPTION[2]]:
+                level = Level(self.window, 'level1', menu_return)
+                level_return = level.run()
+                pass
+            else:
+                pygame.quit()
+                sys.exit()
